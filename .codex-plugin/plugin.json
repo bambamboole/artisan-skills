@@ -1,6 +1,6 @@
 {
   "name": "artisan",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Compact engineering, frontend, visual brainstorming, PHP, React, TypeScript, and writing skills for Codex and Claude.",
   "author": {
     "name": "Artisan Skills"
@@ -13,7 +13,16 @@
     "longDescription": "Trigger-based engineering, frontend, visual brainstorming, PHP, React, TypeScript, and writing skills for Codex and Claude.",
     "developerName": "Artisan Skills",
     "category": "Developer Tools",
-    "capabilities": ["Write", "Review", "Design"],
-    "defaultPrompt": ["Plan a focused implementation change."]
-  }
+    "capabilities": [
+      "Write",
+      "Review",
+      "Design"
+    ],
+    "defaultPrompt": [
+      "Plan a focused implementation change."
+    ]
+  },
+  "homepage": "https://github.com/bambamboole/artisan-skills",
+  "repository": "https://github.com/bambamboole/artisan-skills",
+  "license": "MIT"
 }

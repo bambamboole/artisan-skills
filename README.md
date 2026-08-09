@@ -6,6 +6,18 @@ trigger-based skills.
 
 ## Install
 
+From GitHub, no checkout required:
+
+```sh
+claude plugin marketplace add bambamboole/artisan-skills
+claude plugin install artisan@artisan
+```
+
+Individual skills also install with the [skills CLI](https://www.skills.sh):
+`npx skills add bambamboole/artisan-skills`.
+
+## Develop
+
 Requires Python 3. Formatting Markdown also requires Node.js 20+.
 
 ```sh
@@ -17,7 +29,8 @@ bin/check
 directories, registers the Codex personal marketplace entry, and refuses to overwrite conflicting
 paths.
 
-For Claude, register this checkout as a marketplace once, then install the plugin:
+For Claude development against the checkout, register it as a local marketplace once, then install
+the plugin:
 
 ```sh
 claude plugin marketplace add . --scope user
@@ -66,3 +79,8 @@ claude plugin validate --strict .
 Skill bodies should be concise. Keep them guidance specific, reusable, and evidence-backed; use
 headings and lists to expose real decisions, and put project-specific conventions in that project
 rather than here.
+
+## License
+
+MIT. The `writing` skill adapts [agent-style](https://github.com/yzhao062/agent-style) (CC BY 4.0);
+see `LICENSE.md`.

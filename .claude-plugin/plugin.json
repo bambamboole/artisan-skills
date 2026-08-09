@@ -1,9 +1,12 @@
 {
   "name": "artisan",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Compact engineering, frontend, visual brainstorming, PHP, React, TypeScript, and writing skills for Codex and Claude.",
   "author": {
     "name": "Artisan Skills"
   },
-  "hooks": "./hooks/claude-codex-hooks.json"
+  "hooks": "./hooks/claude-codex-hooks.json",
+  "homepage": "https://github.com/bambamboole/artisan-skills",
+  "repository": "https://github.com/bambamboole/artisan-skills",
+  "license": "MIT"
 }
