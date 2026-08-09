@@ -15,10 +15,11 @@ SKILLS = (
     "artisan-parallel",
     "artisan-frontend-design",
     "artisan-web-art-direction",
-    "artisan-kotlin-backend",
+    "artisan-php",
     "artisan-react",
     "artisan-typescript",
 )
+RETIRED_SKILLS = ("artisan-kotlin-backend",)
 
 
 def link(path, target):
@@ -77,9 +78,23 @@ def main():
             raise RuntimeError(f"missing source skill: {target}")
         if (path.exists() or path.is_symlink()) and not (path.is_symlink() and path.resolve() == target.resolve()):
             raise RuntimeError(f"refusing to replace {path}")
+    retired_links = [
+        home / runtime / skill
+        for runtime in (".agents/skills", ".claude/skills")
+        for skill in RETIRED_SKILLS
+    ]
+    for path in retired_links:
+        expected = ROOT / "skills" / path.name
+        if (path.exists() or path.is_symlink()) and (
+            not path.is_symlink() or path.readlink() != expected
+        ):
+            raise RuntimeError(f"refusing to replace {path}")
     link(plugin_link, ROOT)
     for path, target in zip(skill_links, targets[1:]):
         link(path, target)
+    for path in retired_links:
+        if path.is_symlink():
+            path.unlink()
     install_marketplace(home / ".agents/plugins/marketplace.json")
     print(f"installed {NAME}")
 

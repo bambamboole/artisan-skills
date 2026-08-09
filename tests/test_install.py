@@ -17,7 +17,7 @@ SKILLS = (
     "artisan-parallel",
     "artisan-frontend-design",
     "artisan-web-art-direction",
-    "artisan-kotlin-backend",
+    "artisan-php",
     "artisan-react",
     "artisan-typescript",
 )
@@ -70,6 +70,21 @@ class InstallTests(unittest.TestCase):
 
             self.assertNotEqual(result.returncode, 0)
             self.assertEqual(conflict.read_text(), "keep me")
+
+    def test_removes_legacy_kotlin_links(self):
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory)
+            for runtime in (".agents/skills", ".claude/skills"):
+                stale_link = home / runtime / "artisan-kotlin-backend"
+                stale_link.parent.mkdir(parents=True, exist_ok=True)
+                stale_link.symlink_to(ROOT / "skills/artisan-kotlin-backend")
+
+            result = self.run_install(home)
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            for runtime in (".agents/skills", ".claude/skills"):
+                self.assertFalse((home / runtime / "artisan-kotlin-backend").exists())
+                self.assertFalse((home / runtime / "artisan-kotlin-backend").is_symlink())
 
     def test_check_accepts_an_installed_framework(self):
         with tempfile.TemporaryDirectory() as directory:

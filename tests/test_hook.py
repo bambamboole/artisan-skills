@@ -23,7 +23,7 @@ class SessionHookTests(unittest.TestCase):
             "artisan-parallel",
             "artisan-frontend-design",
             "artisan-web-art-direction",
-            "artisan-kotlin-backend",
+            "artisan-php",
             "artisan-react",
             "artisan-typescript",
         ):
@@ -45,10 +45,10 @@ class SessionHookTests(unittest.TestCase):
         self.assertIn("rendered result", frontend)
         self.assertIn("one horizontal reference image per section", art_direction)
 
-    def test_kotlin_skill_covers_api_migration_and_persistence(self):
-        skill = (ROOT / "skills/artisan-kotlin-backend/SKILL.md").read_text()
+    def test_php_skill_covers_frameworks_and_validation(self):
+        skill = (ROOT / "skills/artisan-php/SKILL.md").read_text()
 
-        for term in ("Ktor", "Java conversion", "JPA", "@Serializable"):
+        for term in ("Laravel", "Symfony", "PHPUnit", "static analysis"):
             self.assertIn(term, skill)
 
     def test_react_and_typescript_skills_cover_vite_testing_and_contracts(self):

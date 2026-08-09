@@ -10,7 +10,7 @@ Review diff or tests → artisan-review.
 Split independent tasks → artisan-parallel.
 Build or refine UI → artisan-frontend-design.
 Generate web reference images → artisan-web-art-direction.
-Work on Kotlin/JVM or migrate Java → artisan-kotlin-backend.
+Build or review PHP → artisan-php.
 Build or refine React → artisan-react.
 Build or review TypeScript → artisan-typescript.
 Inspect first; reuse before adding; keep diffs minimal; verify changed behavior. Skill bodies contain details; do not impose process on simple questions."""

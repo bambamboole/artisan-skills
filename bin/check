@@ -15,10 +15,11 @@ SKILLS = (
     "artisan-parallel",
     "artisan-frontend-design",
     "artisan-web-art-direction",
-    "artisan-kotlin-backend",
+    "artisan-php",
     "artisan-react",
     "artisan-typescript",
 )
+RETIRED_SKILLS = ("artisan-kotlin-backend",)
 
 
 def skill_errors(skill):
@@ -61,6 +62,11 @@ def main():
     for path, target in expected_links:
         if not path.is_symlink() or path.resolve() != target.resolve():
             errors.append(f"missing link: {path}")
+    for runtime in (".agents/skills", ".claude/skills"):
+        for skill in RETIRED_SKILLS:
+            path = home / runtime / skill
+            if path.exists() or path.is_symlink():
+                errors.append(f"stale retired skill: {path}")
     try:
         plugins = json.loads((home / ".agents/plugins/marketplace.json").read_text()).get("plugins", [])
         if not any(plugin.get("name") == NAME for plugin in plugins):

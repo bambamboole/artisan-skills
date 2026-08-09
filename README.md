@@ -1,6 +1,6 @@
 # Artisan Skills
 
-A small, opinionated skill framework shared by Codex and Claude. It replaces overlapping workflow, frontend, Kotlin, React, and TypeScript prompts with concise, trigger-based skills.
+A small, opinionated skill framework shared by Codex and Claude. It replaces overlapping workflow, frontend, PHP, React, and TypeScript prompts with concise, trigger-based skills.
 
 ## Install
 
@@ -33,7 +33,7 @@ Codex discovers the plugin through the personal marketplace created by `bin/inst
 | `artisan-parallel` | Independent, non-overlapping agent work |
 | `artisan-frontend-design` | Production interface design and refinement |
 | `artisan-web-art-direction` | Image-based website and product references |
-| `artisan-kotlin-backend` | Kotlin/JVM, Ktor, JPA, and Java migration |
+| `artisan-php` | PHP applications, Laravel/Symfony, Composer, and tests |
 | `artisan-react` | React components, state, effects, and tests |
 | `artisan-typescript` | TypeScript contracts, modules, builds, and type tests |
 
