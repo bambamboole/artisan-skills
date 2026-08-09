@@ -1,12 +1,28 @@
 ---
 name: artisan-review
-description: Use when reviewing a code diff, pull request, staged changes, or the value and ownership of tests.
+description:
+  Use when reviewing a code diff, pull request, staged change, or test suite for concrete
+  correctness, maintainability, and verification risks without editing unless asked.
 ---
 
-# Review Signal
+# Review for Actionable Risk
 
-Review without editing unless asked. Read the changed flow and relevant project rules. Report only concrete, actionable
-findings: missed reuse, needless complexity or work, wrong abstraction boundary, broken behavior, or a test that does
-not prove an observable change. Prefer the smallest correction and name its location. Do not request generic extra
-tests, documentation, style preferences, or speculative cleanup. If there are no findings, say so and name the
-dimensions checked. Keep test ownership at the layer where behavior is observable.
+## Read the Change
+
+- Read project rules, the changed flow, and relevant callers before judging the diff.
+- Check behavior, reuse, abstraction boundaries, failure handling, and observable test coverage.
+
+## Report Signal
+
+- Report only concrete, actionable findings. Name the location, impact, and smallest correction.
+- Flag missed reuse, needless complexity, broken behavior, wrong ownership, or a test that does not
+  prove a meaningful change: render-only tests, styling-class pins, absence-only assertions, and
+  mock tautologies earn deletion, not praise.
+- Confirm new imports and dependencies exist in the manifest.
+- When a hunk you are already reading raises a concrete correctness doubt, trace it to ground and
+  report a verified defect or an explicit question; do not defer it.
+- Do not request generic tests, documentation, style preferences, or speculative cleanup, and do not
+  flag what a linter or type checker already catches or pre-existing issues on untouched lines.
+
+If there are no findings, say so and name the dimensions checked. Keep test ownership at the layer
+where behavior is observable.

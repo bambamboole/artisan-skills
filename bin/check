@@ -6,7 +6,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-NAME = "artisan-skills"
+NAME = "artisan"
+MAX_BODY_WORDS = 250
+MAX_DESCRIPTION_CHARS = 1024
 SKILLS = (
     "artisan-shape",
     "artisan-build",
@@ -14,12 +16,13 @@ SKILLS = (
     "artisan-review",
     "artisan-parallel",
     "artisan-frontend-design",
-    "artisan-web-art-direction",
+    "artisan-visual-brainstorming",
     "artisan-php",
     "artisan-react",
     "artisan-typescript",
+    "writing",
 )
-RETIRED_SKILLS = ("artisan-kotlin-backend",)
+RETIRED_SKILLS = ("artisan-kotlin-backend", "artisan-web-art-direction")
 
 
 def skill_errors(skill):
@@ -34,10 +37,27 @@ def skill_errors(skill):
     errors = []
     if f"name: {skill}" not in frontmatter:
         errors.append(f"wrong name: {path}")
-    if "description: Use when " not in frontmatter:
+    description_lines = []
+    collecting_description = False
+    for line in frontmatter.splitlines():
+        if line.startswith("description: "):
+            description_lines = [line.removeprefix("description: ")]
+            break
+        if line == "description:":
+            collecting_description = True
+            continue
+        if collecting_description and line.startswith((" ", "\t")):
+            description_lines.append(line.strip())
+            continue
+        if collecting_description:
+            break
+    description = " ".join(description_lines)
+    if not description.startswith("Use when "):
         errors.append(f"missing trigger description: {path}")
-    if len(body.split()) > 100:
-        errors.append(f"over 100 words: {path}")
+    if len(description) > MAX_DESCRIPTION_CHARS:
+        errors.append(f"overlong description: {path}")
+    if len(body.split()) > MAX_BODY_WORDS:
+        errors.append(f"over {MAX_BODY_WORDS} words: {path}")
     return errors
 
 

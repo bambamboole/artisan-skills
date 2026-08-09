@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-NAME = "artisan-skills"
+NAME = "artisan"
 SKILLS = (
     "artisan-shape",
     "artisan-build",
@@ -14,12 +14,13 @@ SKILLS = (
     "artisan-review",
     "artisan-parallel",
     "artisan-frontend-design",
-    "artisan-web-art-direction",
+    "artisan-visual-brainstorming",
     "artisan-php",
     "artisan-react",
     "artisan-typescript",
+    "writing",
 )
-RETIRED_SKILLS = ("artisan-kotlin-backend",)
+RETIRED_SKILLS = ("artisan-kotlin-backend", "artisan-web-art-direction")
 
 
 def link(path, target):

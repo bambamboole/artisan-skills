@@ -1,18 +1,18 @@
 {
-  "name": "artisan-skills",
+  "name": "artisan",
   "owner": {
     "name": "Artisan Skills"
   },
   "metadata": {
-    "description": "Compact engineering, frontend, Kotlin, React, and TypeScript skills for Codex and Claude.",
-    "version": "0.7.0",
+    "description": "Compact engineering, frontend, visual brainstorming, PHP, React, TypeScript, and writing skills for Codex and Claude.",
+    "version": "0.8.0",
     "pluginRoot": "."
   },
   "plugins": [
     {
-      "name": "artisan-skills",
+      "name": "artisan",
       "source": ".",
-      "description": "Compact engineering, frontend, Kotlin, React, and TypeScript skills for Codex and Claude.",
+      "description": "Compact engineering, frontend, visual brainstorming, PHP, React, TypeScript, and writing skills for Codex and Claude.",
       "category": "productivity"
     }
   ]

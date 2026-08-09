@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""Format Markdown with the pinned OxFmt release."""
+
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+OXFMT_VERSION = "0.61.0"
+DEFAULT_TARGETS = ("README.md", "skills/**/*.md")
+
+
+def main():
+    arguments = sys.argv[1:]
+    if arguments[:1] in (["-h"], ["--help"]):
+        print("usage: bin/format [--check] [MARKDOWN_PATH_OR_GLOB ...]")
+        return 0
+
+    mode = "--write"
+    if arguments[:1] == ["--check"]:
+        mode = "--check"
+        arguments = arguments[1:]
+
+    npx = shutil.which("npx")
+    if npx is None:
+        print("format requires Node.js and npx", file=sys.stderr)
+        return 1
+
+    command = [
+        npx,
+        "--yes",
+        f"oxfmt@{OXFMT_VERSION}",
+        "--config",
+        str(ROOT / ".oxfmtrc.json"),
+        mode,
+        *(arguments or DEFAULT_TARGETS),
+    ]
+    return subprocess.run(command, cwd=ROOT).returncode
+
+
+if __name__ == "__main__":
+    sys.exit(main())

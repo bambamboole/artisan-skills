@@ -1,16 +1,16 @@
 {
-  "name": "artisan-skills",
-  "version": "0.7.0",
-  "description": "Compact engineering, frontend, Kotlin, React, and TypeScript skills for Codex and Claude.",
+  "name": "artisan",
+  "version": "0.8.0",
+  "description": "Compact engineering, frontend, visual brainstorming, PHP, React, TypeScript, and writing skills for Codex and Claude.",
   "author": {
     "name": "Artisan Skills"
   },
   "skills": "./skills/",
   "hooks": "./hooks/claude-codex-hooks.json",
   "interface": {
-    "displayName": "Artisan Skills",
+    "displayName": "Artisan",
     "shortDescription": "Compact engineering skills",
-    "longDescription": "Trigger-based engineering, frontend, Kotlin, React, and TypeScript skills for Codex and Claude.",
+    "longDescription": "Trigger-based engineering, frontend, visual brainstorming, PHP, React, TypeScript, and writing skills for Codex and Claude.",
     "developerName": "Artisan Skills",
     "category": "Developer Tools",
     "capabilities": ["Write", "Review", "Design"],

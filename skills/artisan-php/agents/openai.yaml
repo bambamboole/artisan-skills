@@ -1,4 +1,0 @@
-interface:
-  display_name: "Artisan PHP"
-  short_description: "Build and review PHP applications."
-  default_prompt: "Use $artisan-php to build or review PHP code using the project conventions."
