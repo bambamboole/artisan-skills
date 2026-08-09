@@ -11,6 +11,8 @@ description:
 
 - Read project rules, the changed flow, and relevant callers before judging the diff.
 - Check behavior, reuse, abstraction boundaries, failure handling, and observable test coverage.
+- Check the diff against its stated intent separately: missing requirements and unrequested scope
+  are findings, and neither axis may mask the other.
 
 ## Report Signal
 

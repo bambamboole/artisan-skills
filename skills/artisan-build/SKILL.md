@@ -17,7 +17,8 @@ description:
 ## Change
 
 - Prefer platform and standard-library features over new dependencies or speculative abstractions.
-- For domain or backend behavior, write a focused failing test, then implement only enough to pass.
+- For domain or backend behavior, write a focused failing test at the nearest public boundary so it
+  survives refactors, then implement only enough to pass.
 - For templates and client-only behavior, implement first and verify the observable result; use a
   browser test when the behavior exists only in the browser.
 
