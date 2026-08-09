@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+import json
+import os
+import sys
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+NAME = "artisan-skills"
+SKILLS = (
+    "artisan-shape",
+    "artisan-build",
+    "artisan-debug",
+    "artisan-review",
+    "artisan-parallel",
+    "artisan-frontend-design",
+    "artisan-web-art-direction",
+    "artisan-kotlin-backend",
+    "artisan-react",
+    "artisan-typescript",
+)
+
+
+def skill_errors(skill):
+    path = ROOT / "skills" / skill / "SKILL.md"
+    if not path.is_file():
+        return [f"missing {path}"]
+    text = path.read_text().strip()
+    parts = text.split("---", 2)
+    if len(parts) != 3 or not text.startswith("---"):
+        return [f"invalid frontmatter: {path}"]
+    frontmatter, body = parts[1], parts[2]
+    errors = []
+    if f"name: {skill}" not in frontmatter:
+        errors.append(f"wrong name: {path}")
+    if "description: Use when " not in frontmatter:
+        errors.append(f"missing trigger description: {path}")
+    if len(body.split()) > 100:
+        errors.append(f"over 100 words: {path}")
+    return errors
+
+
+def main():
+    errors = []
+    try:
+        manifest = json.loads((ROOT / ".codex-plugin/plugin.json").read_text())
+        if manifest.get("name") != NAME or manifest.get("skills") != "./skills/":
+            errors.append("invalid plugin manifest")
+    except (OSError, json.JSONDecodeError) as error:
+        errors.append(f"invalid plugin manifest: {error}")
+    for skill in SKILLS:
+        errors.extend(skill_errors(skill))
+
+    home = Path(os.environ["HOME"])
+    expected_links = [(home / "plugins" / NAME, ROOT)]
+    expected_links += [
+        (home / runtime / skill, ROOT / "skills" / skill)
+        for runtime in (".agents/skills", ".claude/skills")
+        for skill in SKILLS
+    ]
+    for path, target in expected_links:
+        if not path.is_symlink() or path.resolve() != target.resolve():
+            errors.append(f"missing link: {path}")
+    try:
+        plugins = json.loads((home / ".agents/plugins/marketplace.json").read_text()).get("plugins", [])
+        if not any(plugin.get("name") == NAME for plugin in plugins):
+            errors.append("missing marketplace entry")
+    except (OSError, json.JSONDecodeError) as error:
+        errors.append(f"invalid marketplace: {error}")
+
+    if errors:
+        print("\n".join(errors), file=sys.stderr)
+        return 1
+    print("ok")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

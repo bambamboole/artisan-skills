@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+import json
+import os
+import sys
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+NAME = "artisan-skills"
+SKILLS = (
+    "artisan-shape",
+    "artisan-build",
+    "artisan-debug",
+    "artisan-review",
+    "artisan-parallel",
+    "artisan-frontend-design",
+    "artisan-web-art-direction",
+    "artisan-kotlin-backend",
+    "artisan-react",
+    "artisan-typescript",
+)
+
+
+def link(path, target):
+    if path.is_symlink() and path.resolve() == target.resolve():
+        return
+    if path.exists() or path.is_symlink():
+        raise RuntimeError(f"refusing to replace {path}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.symlink_to(target)
+
+
+def load_marketplace(path):
+    if not path.exists():
+        return {"name": "personal", "interface": {"displayName": "Personal"}, "plugins": []}
+    with path.open() as file:
+        marketplace = json.load(file)
+    if not isinstance(marketplace.get("plugins"), list):
+        raise RuntimeError(f"invalid marketplace: {path}")
+    return marketplace
+
+
+def install_marketplace(path):
+    marketplace = load_marketplace(path)
+    entry = {
+        "name": NAME,
+        "source": {"source": "local", "path": f"./plugins/{NAME}"},
+        "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+        "category": "Developer Tools",
+    }
+    matches = [index for index, plugin in enumerate(marketplace["plugins"]) if plugin.get("name") == NAME]
+    if len(matches) > 1:
+        raise RuntimeError(f"duplicate marketplace entries for {NAME}")
+    if matches:
+        marketplace["plugins"][matches[0]] = entry
+    else:
+        marketplace["plugins"].append(entry)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(marketplace, indent=2) + "\n")
+
+
+def main():
+    home = Path(os.environ["HOME"])
+    plugin_link = home / "plugins" / NAME
+    skill_links = [
+        home / runtime / skill
+        for runtime in (".agents/skills", ".claude/skills")
+        for skill in SKILLS
+    ]
+    targets = [ROOT] + [
+        ROOT / "skills" / skill
+        for _ in (".agents/skills", ".claude/skills")
+        for skill in SKILLS
+    ]
+    for path, target in zip([plugin_link] + skill_links, targets):
+        if not target.is_dir():
+            raise RuntimeError(f"missing source skill: {target}")
+        if (path.exists() or path.is_symlink()) and not (path.is_symlink() and path.resolve() == target.resolve()):
+            raise RuntimeError(f"refusing to replace {path}")
+    link(plugin_link, ROOT)
+    for path, target in zip(skill_links, targets[1:]):
+        link(path, target)
+    install_marketplace(home / ".agents/plugins/marketplace.json")
+    print(f"installed {NAME}")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (KeyError, OSError, RuntimeError, json.JSONDecodeError) as error:
+        print(f"install failed: {error}", file=sys.stderr)
+        sys.exit(1)

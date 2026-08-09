@@ -1,0 +1,9 @@
+{
+  "name": "artisan-skills",
+  "version": "0.6.0",
+  "description": "Compact engineering, frontend, Kotlin, React, and TypeScript skills for Codex and Claude.",
+  "author": {
+    "name": "Artisan Skills"
+  },
+  "hooks": "./hooks/claude-codex-hooks.json"
+}

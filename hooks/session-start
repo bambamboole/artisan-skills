@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+import json
+
+
+CONTEXT = """ARTISAN: apply the matching skill only when its trigger fits.
+Plan or scope non-trivial work → artisan-shape.
+Implement change → artisan-build.
+Debug failure → artisan-debug.
+Review diff or tests → artisan-review.
+Split independent tasks → artisan-parallel.
+Build or refine UI → artisan-frontend-design.
+Generate web reference images → artisan-web-art-direction.
+Work on Kotlin/JVM or migrate Java → artisan-kotlin-backend.
+Build or refine React → artisan-react.
+Build or review TypeScript → artisan-typescript.
+Inspect first; reuse before adding; keep diffs minimal; verify changed behavior. Skill bodies contain details; do not impose process on simple questions."""
+
+print(json.dumps({"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": CONTEXT}}))
