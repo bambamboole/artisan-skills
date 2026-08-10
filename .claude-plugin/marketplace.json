@@ -4,7 +4,7 @@
     "name": "Artisan Skills"
   },
   "metadata": {
-    "description": "Compact engineering, frontend, visual brainstorming, PHP, React, TypeScript, and writing skills for Codex and Claude.",
+    "description": "Compact engineering, frontend, visual brainstorming, PHP, React, TypeScript, writing, and Git/GitHub skills for Codex and Claude.",
     "version": "0.8.2",
     "pluginRoot": "."
   },
@@ -12,7 +12,7 @@
     {
       "name": "artisan",
       "source": ".",
-      "description": "Compact engineering, frontend, visual brainstorming, PHP, React, TypeScript, and writing skills for Codex and Claude.",
+      "description": "Compact engineering, frontend, visual brainstorming, PHP, React, TypeScript, writing, and Git/GitHub skills for Codex and Claude.",
       "category": "productivity"
     }
   ]

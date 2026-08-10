@@ -19,6 +19,7 @@ SKILLS = (
     "artisan-react",
     "artisan-typescript",
     "writing",
+    "git-and-github",
 )
 RETIRED_SKILLS = ("artisan-kotlin-backend", "artisan-web-art-direction")
 

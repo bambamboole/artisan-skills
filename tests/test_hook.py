@@ -27,6 +27,7 @@ class SessionHookTests(unittest.TestCase):
             "artisan-react",
             "artisan-typescript",
             "writing",
+            "git-and-github",
         ):
             self.assertIn(skill, context)
         self.assertNotIn("ponytail", context.lower())
@@ -70,6 +71,19 @@ class SessionHookTests(unittest.TestCase):
         skill = (ROOT / "skills/writing/SKILL.md").read_text()
 
         for term in ("active voice", "concrete nouns", "Cite verifiable sources", "terminology consistent", "CC BY 4.0"):
+            self.assertIn(term, skill)
+
+    def test_git_skill_enforces_clean_history_and_explicit_auth(self):
+        skill = (ROOT / "skills/git-and-github/SKILL.md").read_text()
+
+        for term in (
+            "Co-Authored-By",
+            "conventional-commit",
+            "feature branch",
+            "SSH",
+            "gh auth status",
+            "draft",
+        ):
             self.assertIn(term, skill)
 
     def test_react_and_typescript_skills_cover_vite_testing_and_contracts(self):

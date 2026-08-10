@@ -1,7 +1,7 @@
 # Artisan Skills
 
 A small, opinionated skill framework shared by Codex and Claude. It replaces overlapping workflow,
-frontend, visual exploration, PHP, React, TypeScript, and writing prompts with concise,
+frontend, visual exploration, PHP, React, TypeScript, writing, and Git/GitHub prompts with concise,
 trigger-based skills.
 
 ## Install
@@ -55,6 +55,7 @@ skills are namespaced as `artisan:<skill>`, such as `artisan:writing`.
 | `artisan-react`                | React components, state, effects, and tests           |
 | `artisan-typescript`           | TypeScript contracts, modules, builds, and type tests |
 | `writing`                      | Clear, evidence-backed English technical prose        |
+| `git-and-github`               | Clean commits, feature branches, pushes, and PRs      |
 
 The Claude SessionStart hook is only a compact router; detailed instructions load only when a skill
 matches. It does not impose process on simple questions.

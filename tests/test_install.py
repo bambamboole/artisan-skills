@@ -22,6 +22,7 @@ SKILLS = (
     "artisan-react",
     "artisan-typescript",
     "writing",
+    "git-and-github",
 )
 
 
