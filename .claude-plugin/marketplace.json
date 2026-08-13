@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Compact engineering, frontend, visual brainstorming, PHP, React, TypeScript, writing, and Git/GitHub skills for Codex and Claude.",
-    "version": "0.8.3",
+    "version": "0.8.4",
     "pluginRoot": "."
   },
   "plugins": [
