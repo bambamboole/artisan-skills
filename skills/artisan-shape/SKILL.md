@@ -1,8 +1,8 @@
 ---
 name: artisan-shape
 description:
-  Use when defining a non-trivial feature, behavior change, or refactor before implementation,
-  especially when scope, interface, trade-offs, or acceptance criteria are unclear.
+  Use when planning or defining a non-trivial feature, behavior change, or refactor before
+  implementation, especially when scope, interface, trade-offs, or acceptance criteria are unclear.
 ---
 
 # Shape Work
@@ -10,8 +10,10 @@ description:
 ## Discover
 
 - Read repository instructions and the affected code before proposing work.
-- Separate observed facts from assumptions. Ask only for a decision that materially changes scope or
-  behavior.
+- Separate observed facts from assumptions. Whenever purpose, scope, constraints, or success
+  criteria are not fully clear, ask 2-3 focused clarifying questions before proposing a plan; never
+  fill the gap with a guess.
+- Do not write code, scaffold, or invoke an implementation skill until the plan is approved.
 
 ## Define
 
@@ -23,6 +25,7 @@ description:
 
 ## Plan
 
-Finish with the smallest decision-complete plan: touched surfaces, behavior and interface changes,
-failure handling, and verification. Avoid ceremonies, documents, and abstractions that the work does
-not need.
+- Finish with the smallest decision-complete plan: touched surfaces, behavior and interface changes,
+  failure handling, and verification. Avoid ceremonies and abstractions that the work does not need.
+- Write the plan to `plans/YYYY-MM-DD-<topic>.md` in the repository root. Ensure `plans/` is listed
+  in `.gitignore` and add it if missing; plans are working notes, never committed artifacts.
