@@ -3,6 +3,7 @@ name: git-and-github
 description:
   Use when committing, branching, pushing, or opening a pull request so history stays clean, scoped,
   and free of agent attribution.
+model: claude-haiku-4-5
 ---
 
 # Git & GitHub
