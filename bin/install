@@ -7,21 +7,21 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 NAME = "artisan"
-SKILLS = (
-    "artisan-shape",
+SKILLS = tuple(sorted(path.name for path in (ROOT / "skills").iterdir() if path.is_dir()))
+RETIRED_SKILLS = (
     "artisan-build",
     "artisan-debug",
-    "artisan-review",
-    "artisan-parallel",
     "artisan-frontend-design",
-    "artisan-visual-brainstorming",
+    "artisan-kotlin-backend",
+    "artisan-parallel",
     "artisan-php",
     "artisan-react",
+    "artisan-review",
+    "artisan-shape",
     "artisan-typescript",
-    "writing",
-    "git-and-github",
+    "artisan-visual-brainstorming",
+    "artisan-web-art-direction",
 )
-RETIRED_SKILLS = ("artisan-kotlin-backend", "artisan-web-art-direction")
 
 
 def link(path, target):

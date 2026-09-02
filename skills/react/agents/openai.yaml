@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build React Interfaces"
+  short_description: "Build and test React behavior in existing apps"
+  default_prompt: "Use $react to implement and test this React behavior."

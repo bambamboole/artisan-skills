@@ -1,5 +1,5 @@
 ---
-name: artisan-typescript
+name: typescript
 description:
   Use when building, reviewing, debugging, or migrating TypeScript or JavaScript types, modules,
   package APIs, builds, or type tests.

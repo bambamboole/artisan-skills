@@ -3,16 +3,16 @@ import json
 
 
 CONTEXT = """ARTISAN: apply a skill only when its trigger fits.
-Plan or scope non-trivial work → artisan-shape.
-Implement change → artisan-build.
-Debug failure → artisan-debug.
-Review diff or tests → artisan-review.
-Split independent tasks → artisan-parallel.
-Build or audit UI → artisan-frontend-design.
-Explore UI directions → artisan-visual-brainstorming.
-Build or review PHP → artisan-php.
-Build or refine React → artisan-react.
-Build or review TypeScript → artisan-typescript.
+Plan or scope non-trivial work → shape.
+Implement change → build.
+Debug failure → debug.
+Review diff or tests → review.
+Split independent tasks → parallel.
+Build or audit UI → frontend-design.
+Explore UI directions → visual-brainstorming.
+Build or review PHP → php.
+Build or refine React → react.
+Build or review TypeScript → typescript.
 Write or edit technical prose → writing.
 Commit, branch, push, PR → git-and-github.
 Inspect first; reuse before adding; keep diffs minimal; verify changed behavior. Details live in skill bodies; no process on simple questions."""

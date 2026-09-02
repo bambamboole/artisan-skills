@@ -1,12 +1,11 @@
 {
   "name": "artisan",
-  "version": "0.8.5",
+  "version": "0.9.0+codex.20260902193427",
   "description": "Compact engineering, frontend, visual brainstorming, PHP, React, TypeScript, writing, and Git/GitHub skills for Codex and Claude.",
   "author": {
     "name": "Artisan Skills"
   },
   "skills": "./skills/",
-  "hooks": "./hooks/claude-codex-hooks.json",
   "interface": {
     "displayName": "Artisan",
     "shortDescription": "Compact engineering skills",

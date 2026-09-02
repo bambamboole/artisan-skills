@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -10,19 +11,20 @@ ROOT = Path(__file__).resolve().parents[1]
 INSTALL = ROOT / "bin" / "install"
 CHECK = ROOT / "bin" / "check"
 PLUGIN_NAME = "artisan"
-SKILLS = (
-    "artisan-shape",
+SKILLS = tuple(sorted(path.name for path in (ROOT / "skills").iterdir() if path.is_dir()))
+RETIRED_SKILLS = (
     "artisan-build",
     "artisan-debug",
-    "artisan-review",
-    "artisan-parallel",
     "artisan-frontend-design",
-    "artisan-visual-brainstorming",
+    "artisan-kotlin-backend",
+    "artisan-parallel",
     "artisan-php",
     "artisan-react",
+    "artisan-review",
+    "artisan-shape",
     "artisan-typescript",
-    "writing",
-    "git-and-github",
+    "artisan-visual-brainstorming",
+    "artisan-web-art-direction",
 )
 
 
@@ -65,7 +67,7 @@ class InstallTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as directory:
             home = Path(directory)
-            conflict = home / ".claude/skills/artisan-build"
+            conflict = home / ".claude/skills/build"
             conflict.parent.mkdir(parents=True)
             conflict.write_text("keep me")
 
@@ -78,7 +80,7 @@ class InstallTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             home = Path(directory)
             for runtime in (".agents/skills", ".claude/skills"):
-                for skill in ("artisan-kotlin-backend", "artisan-web-art-direction"):
+                for skill in RETIRED_SKILLS:
                     stale_link = home / runtime / skill
                     stale_link.parent.mkdir(parents=True, exist_ok=True)
                     stale_link.symlink_to(ROOT / "skills" / skill)
@@ -87,7 +89,7 @@ class InstallTests(unittest.TestCase):
 
             self.assertEqual(result.returncode, 0, result.stderr)
             for runtime in (".agents/skills", ".claude/skills"):
-                for skill in ("artisan-kotlin-backend", "artisan-web-art-direction"):
+                for skill in RETIRED_SKILLS:
                     self.assertFalse((home / runtime / skill).exists())
                     self.assertFalse((home / runtime / skill).is_symlink())
 
@@ -107,12 +109,64 @@ class InstallTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("ok", result.stdout)
 
+    def test_check_rejects_unsupported_skill_frontmatter(self):
+        with tempfile.TemporaryDirectory() as directory:
+            temporary_root = Path(directory)
+            repository = temporary_root / "repository"
+            home = temporary_root / "home"
+            shutil.copytree(ROOT, repository)
+            skill = repository / "skills/git-and-github/SKILL.md"
+            skill.write_text(
+                skill.read_text().replace(
+                    "name: git-and-github\n",
+                    "name: git-and-github\nmodel: unsupported-model\n",
+                    1,
+                )
+            )
+            environment = os.environ | {"HOME": str(home)}
+
+            install = subprocess.run(
+                [str(repository / "bin/install")],
+                cwd=repository,
+                env=environment,
+                text=True,
+                capture_output=True,
+            )
+            result = subprocess.run(
+                [str(repository / "bin/check")],
+                cwd=repository,
+                env=environment,
+                text=True,
+                capture_output=True,
+            )
+
+            self.assertEqual(install.returncode, 0, install.stderr)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("unsupported frontmatter field", result.stderr)
+
     def test_plugin_manifest_has_required_presentation_metadata(self):
         manifest = json.loads((ROOT / ".codex-plugin/plugin.json").read_text())
+        claude_manifest = json.loads((ROOT / ".claude-plugin/plugin.json").read_text())
+        marketplace = json.loads((ROOT / ".claude-plugin/marketplace.json").read_text())
 
         self.assertIsInstance(manifest.get("author"), dict)
         self.assertIsInstance(manifest.get("interface"), dict)
         self.assertEqual(manifest.get("name"), PLUGIN_NAME)
+        self.assertNotIn("hooks", manifest)
+        self.assertEqual(manifest["name"], claude_manifest["name"])
+        release_version = manifest["version"].split("+", 1)[0]
+        self.assertEqual(release_version, claude_manifest["version"].split("+", 1)[0])
+        self.assertEqual(release_version, marketplace["metadata"]["version"].split("+", 1)[0])
+
+    def test_skills_have_complete_openai_interface_metadata(self):
+        for skill in SKILLS:
+            metadata = ROOT / "skills" / skill / "agents/openai.yaml"
+
+            self.assertTrue(metadata.is_file(), metadata)
+            text = metadata.read_text()
+            for field in ("display_name", "short_description", "default_prompt"):
+                self.assertIn(f"  {field}:", text)
+            self.assertIn(f"${skill}", text)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build PHP Applications"
+  short_description: "Build and verify production PHP applications"
+  default_prompt: "Use $php to implement and verify this PHP change."

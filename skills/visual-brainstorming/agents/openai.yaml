@@ -1,0 +1,4 @@
+interface:
+  display_name: "Explore Interface Directions"
+  short_description: "Explore distinct interface directions with mockups"
+  default_prompt: "Use $visual-brainstorming to create distinct interface directions for comparison."

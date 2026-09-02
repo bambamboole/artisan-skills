@@ -9,20 +9,55 @@ ROOT = Path(__file__).resolve().parents[1]
 NAME = "artisan"
 MAX_BODY_WORDS = 250
 MAX_DESCRIPTION_CHARS = 1024
-SKILLS = (
-    "artisan-shape",
+SKILLS = tuple(sorted(path.name for path in (ROOT / "skills").iterdir() if path.is_dir()))
+RETIRED_SKILLS = (
     "artisan-build",
     "artisan-debug",
-    "artisan-review",
-    "artisan-parallel",
     "artisan-frontend-design",
-    "artisan-visual-brainstorming",
+    "artisan-kotlin-backend",
+    "artisan-parallel",
     "artisan-php",
     "artisan-react",
+    "artisan-review",
+    "artisan-shape",
     "artisan-typescript",
-    "writing",
+    "artisan-visual-brainstorming",
+    "artisan-web-art-direction",
 )
-RETIRED_SKILLS = ("artisan-kotlin-backend", "artisan-web-art-direction")
+ALLOWED_FRONTMATTER_FIELDS = {"allowed-tools", "description", "license", "metadata", "name"}
+
+
+def quoted_value(value):
+    value = value.strip()
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+        return value[1:-1]
+    return None
+
+
+def base_version(version):
+    return version.split("+", 1)[0] if isinstance(version, str) else version
+
+
+def interface_errors(skill):
+    path = ROOT / "skills" / skill / "agents/openai.yaml"
+    if not path.is_file():
+        return [f"missing interface metadata: {path}"]
+    values = {}
+    for line in path.read_text().splitlines():
+        if line.startswith("  ") and not line.startswith("    ") and ":" in line:
+            key, value = line.strip().split(":", 1)
+            values[key] = quoted_value(value)
+    errors = []
+    for field in ("display_name", "short_description", "default_prompt"):
+        if not values.get(field):
+            errors.append(f"missing or unquoted {field}: {path}")
+    short_description = values.get("short_description") or ""
+    if short_description and not 25 <= len(short_description) <= 64:
+        errors.append(f"invalid short_description length: {path}")
+    default_prompt = values.get("default_prompt") or ""
+    if default_prompt and f"${skill}" not in default_prompt:
+        errors.append(f"default_prompt must mention ${skill}: {path}")
+    return errors
 
 
 def skill_errors(skill):
@@ -35,7 +70,21 @@ def skill_errors(skill):
         return [f"invalid frontmatter: {path}"]
     frontmatter, body = parts[1], parts[2]
     errors = []
-    if f"name: {skill}" not in frontmatter:
+    fields = {}
+    for line in frontmatter.splitlines():
+        if not line.strip() or line.startswith((" ", "\t")):
+            continue
+        if ":" not in line:
+            errors.append(f"invalid frontmatter line in {path}: {line}")
+            continue
+        key, value = line.split(":", 1)
+        if key in fields:
+            errors.append(f"duplicate frontmatter field {key}: {path}")
+        fields[key] = value.strip()
+    for field in sorted(set(fields) - ALLOWED_FRONTMATTER_FIELDS):
+        errors.append(f"unsupported frontmatter field {field}: {path}")
+    name = quoted_value(fields.get("name", "")) or fields.get("name", "")
+    if name != skill:
         errors.append(f"wrong name: {path}")
     description_lines = []
     collecting_description = False
@@ -58,15 +107,25 @@ def skill_errors(skill):
         errors.append(f"overlong description: {path}")
     if len(body.split()) > MAX_BODY_WORDS:
         errors.append(f"over {MAX_BODY_WORDS} words: {path}")
+    errors.extend(interface_errors(skill))
     return errors
 
 
 def main():
     errors = []
     try:
-        manifest = json.loads((ROOT / ".codex-plugin/plugin.json").read_text())
-        if manifest.get("name") != NAME or manifest.get("skills") != "./skills/":
-            errors.append("invalid plugin manifest")
+        codex_manifest = json.loads((ROOT / ".codex-plugin/plugin.json").read_text())
+        claude_manifest = json.loads((ROOT / ".claude-plugin/plugin.json").read_text())
+        marketplace = json.loads((ROOT / ".claude-plugin/marketplace.json").read_text())
+        if codex_manifest.get("name") != NAME or codex_manifest.get("skills") != "./skills/":
+            errors.append("invalid Codex plugin manifest")
+        if codex_manifest.get("name") != claude_manifest.get("name"):
+            errors.append("plugin manifest name mismatch")
+        release_version = base_version(codex_manifest.get("version"))
+        if release_version != base_version(claude_manifest.get("version")):
+            errors.append("plugin manifest version mismatch")
+        if release_version != base_version(marketplace.get("metadata", {}).get("version")):
+            errors.append("plugin marketplace version mismatch")
     except (OSError, json.JSONDecodeError) as error:
         errors.append(f"invalid plugin manifest: {error}")
     for skill in SKILLS:

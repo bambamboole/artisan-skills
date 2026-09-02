@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Production Interfaces"
+  short_description: "Build and verify polished production interfaces"
+  default_prompt: "Use $frontend-design to build and verify this production interface."

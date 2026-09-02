@@ -16,16 +16,16 @@ class SessionHookTests(unittest.TestCase):
         context = json.loads(result.stdout)["hookSpecificOutput"]["additionalContext"]
         self.assertLessEqual(len(context.split()), 100)
         for skill in (
-            "artisan-shape",
-            "artisan-build",
-            "artisan-debug",
-            "artisan-review",
-            "artisan-parallel",
-            "artisan-frontend-design",
-            "artisan-visual-brainstorming",
-            "artisan-php",
-            "artisan-react",
-            "artisan-typescript",
+            "shape",
+            "build",
+            "debug",
+            "review",
+            "parallel",
+            "frontend-design",
+            "visual-brainstorming",
+            "php",
+            "react",
+            "typescript",
             "writing",
             "git-and-github",
         ):
@@ -34,27 +34,33 @@ class SessionHookTests(unittest.TestCase):
         self.assertNotIn("superpowers", context.lower())
 
     def test_parallel_skill_requires_independent_ownership(self):
-        skill = (ROOT / "skills/artisan-parallel/SKILL.md").read_text()
+        skill = (ROOT / "skills/parallel/SKILL.md").read_text()
 
         self.assertIn("independent", skill)
         self.assertIn("non-overlapping", skill)
         self.assertIn("evidence", skill)
 
     def test_frontend_skill_requires_rendered_verification(self):
-        frontend = (ROOT / "skills/artisan-frontend-design/SKILL.md").read_text()
+        frontend = (ROOT / "skills/frontend-design/SKILL.md").read_text()
 
         for term in ("rendered result", "100dvh", "IntersectionObserver", "empty states"):
             self.assertIn(term, frontend)
 
     def test_review_skill_flags_low_value_tests(self):
-        skill = (ROOT / "skills/artisan-review/SKILL.md").read_text()
+        skill = (ROOT / "skills/review/SKILL.md").read_text()
 
         for term in ("render-only", "mock tautologies", "manifest"):
             self.assertIn(term, skill)
 
+    def test_build_skill_scales_execution_from_a_visible_task_list(self):
+        skill = (ROOT / "skills/build/SKILL.md").read_text()
+
+        for term in ("task list", "subagents", "independent", "non-overlapping", "primary agent"):
+            self.assertIn(term, skill)
+
     def test_visual_brainstorming_skill_has_a_live_mockup_workflow(self):
-        skill = (ROOT / "skills/artisan-visual-brainstorming/SKILL.md").read_text()
-        switcher = (ROOT / "skills/artisan-visual-brainstorming/assets/visual-direction-switcher.js").read_text()
+        skill = (ROOT / "skills/visual-brainstorming/SKILL.md").read_text()
+        switcher = (ROOT / "skills/visual-brainstorming/assets/visual-direction-switcher.js").read_text()
 
         for term in ("2–3", "Tailwind CDN", "visual-serve"):
             self.assertIn(term, skill)
@@ -62,7 +68,7 @@ class SessionHookTests(unittest.TestCase):
             self.assertIn(term, switcher)
 
     def test_php_skill_covers_frameworks_and_validation(self):
-        skill = (ROOT / "skills/artisan-php/SKILL.md").read_text()
+        skill = (ROOT / "skills/php/SKILL.md").read_text()
 
         for term in ("Laravel", "Symfony", "Pest", "PHPStan", "Rector", "composer", "idempotent"):
             self.assertIn(term, skill)
@@ -83,12 +89,14 @@ class SessionHookTests(unittest.TestCase):
             "SSH",
             "gh auth status",
             "draft",
+            "small, fast subagent model",
+            "authorization",
         ):
             self.assertIn(term, skill)
 
     def test_react_and_typescript_skills_cover_vite_testing_and_contracts(self):
-        react = (ROOT / "skills/artisan-react/SKILL.md").read_text()
-        typescript = (ROOT / "skills/artisan-typescript/SKILL.md").read_text()
+        react = (ROOT / "skills/react/SKILL.md").read_text()
+        typescript = (ROOT / "skills/typescript/SKILL.md").read_text()
 
         for term in (
             "Vite",

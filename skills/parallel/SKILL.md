@@ -1,5 +1,5 @@
 ---
-name: artisan-parallel
+name: parallel
 description:
   Use when an approved plan contains two or more bounded, independent, non-overlapping tasks that
   can be safely owned and verified concurrently.

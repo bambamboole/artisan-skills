@@ -1,5 +1,5 @@
 ---
-name: artisan-shape
+name: shape
 description:
   Use when planning or defining a non-trivial feature, behavior change, or refactor before
   implementation, especially when scope, interface, trade-offs, or acceptance criteria are unclear.
@@ -27,5 +27,10 @@ description:
 
 - Finish with the smallest decision-complete plan: touched surfaces, behavior and interface changes,
   failure handling, and verification. Avoid ceremonies and abstractions that the work does not need.
-- Write the plan to `plans/YYYY-MM-DD-<topic>.md` in the repository root. Ensure `plans/` is listed
-  in `.gitignore` and add it if missing; plans are working notes, never committed artifacts.
+- Honor the user's preference or repository convention for plan storage. If neither exists, ask
+  whether to publish the approved plan as a GitHub issue; recommend it for GitHub-hosted work so the
+  plan outlives the local checkout.
+- Issue creation changes external state. Confirm the target repository and get approval to publish,
+  then create one issue, read it back to verify its title and body, and return its URL.
+- If the user chooses a local plan, write it to `plans/YYYY-MM-DD-<topic>.md`. Ensure `plans/` is
+  gitignored; never commit local plans.

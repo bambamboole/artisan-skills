@@ -1,5 +1,5 @@
 ---
-name: artisan-visual-brainstorming
+name: visual-brainstorming
 description:
   Use when exploring and selecting a visual direction for an interface, product, site, dashboard, or
   flow before production implementation, especially when the user needs concrete HTML mockups to

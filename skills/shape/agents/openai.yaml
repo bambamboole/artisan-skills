@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shape Work"
+  short_description: "Define scope, trade-offs, and an approved plan"
+  default_prompt: "Use $shape to turn this request into a decision-complete plan."

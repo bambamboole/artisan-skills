@@ -1,11 +1,21 @@
 ---
-name: artisan-build
+name: build
 description:
   Use when implementing a scoped feature, bug fix, refactor, template, or user-visible UI behavior
   after the intended outcome is known.
 ---
 
 # Implement Changes
+
+## Execute an Approved Plan
+
+- When implementation follows an approved plan, present a concise task list before editing. Show
+  dependencies and status, and keep the list current as work completes or scope changes.
+- Keep small or sequential work with the primary agent. For a larger plan, fan out only bounded,
+  independent, non-overlapping tasks to subagents, in proportion to useful parallelism.
+- Give each subagent explicit ownership, constraints, and an acceptance check. Keep shared
+  interfaces, ordered work, conflict resolution, and final integration with the primary agent;
+  verify returned diffs and evidence before marking a task complete.
 
 ## Orient
 

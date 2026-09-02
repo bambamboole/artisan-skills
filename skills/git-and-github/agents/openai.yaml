@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git and GitHub"
+  short_description: "Create clean Git history and verified GitHub PRs"
+  default_prompt: "Use $git-and-github to prepare clean commits and a verified pull request."

@@ -1,5 +1,5 @@
 ---
-name: artisan-debug
+name: debug
 description:
   Use when investigating a bug, regression, failing test, production error, performance regression,
   or behavior reported as broken, throwing, or slow when the underlying cause is not yet
@@ -14,6 +14,8 @@ description:
   collect the most direct evidence available.
 - Prefer reading real state — logs, database queries, the app's own CLI — over writing bespoke debug
   scripts.
+- Redact secrets, authentication headers, personal data, and sensitive payloads before displaying
+  commands, logs, traces, or captured artifacts.
 - Trace inputs, state, boundaries, and callers through the shared path.
 
 ## Locate the Cause

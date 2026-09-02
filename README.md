@@ -6,15 +6,15 @@ trigger-based skills.
 
 ## Install
 
-From GitHub, no checkout required:
+The recommended path installs the complete plugin from GitHub without a checkout:
 
 ```sh
 claude plugin marketplace add bambamboole/artisan-skills
 claude plugin install artisan@artisan
 ```
 
-Individual skills also install with the [skills CLI](https://www.skills.sh):
-`npx skills add bambamboole/artisan-skills`.
+For intentionally narrow setups, individual skills also install with the
+[skills CLI](https://www.skills.sh): `npx skills add bambamboole/artisan-skills`.
 
 ## Develop
 
@@ -38,24 +38,24 @@ claude plugin install artisan@artisan --scope user
 ```
 
 Codex discovers the plugin through the personal marketplace created by `bin/install`. Installed
-skills are namespaced as `artisan:<skill>`, such as `artisan:writing`.
+skills are namespaced as `artisan:<skill>`, such as `artisan:build` and `artisan:writing`.
 
 ## Skills
 
-| Skill                          | Use for                                               |
-| ------------------------------ | ----------------------------------------------------- |
-| `artisan-shape`                | Non-trivial scope, design, and plans                  |
-| `artisan-build`                | Focused production implementation                     |
-| `artisan-debug`                | Bugs, regressions, and failing tests                  |
-| `artisan-review`               | Diffs, pull requests, and test value                  |
-| `artisan-parallel`             | Independent, non-overlapping agent work               |
-| `artisan-frontend-design`      | Production interface design, refinement, and audits   |
-| `artisan-visual-brainstorming` | 2–3 locally reviewed Tailwind HTML directions         |
-| `artisan-php`                  | PHP apps, plain Composer packages, Laravel/Symfony    |
-| `artisan-react`                | React components, state, effects, and tests           |
-| `artisan-typescript`           | TypeScript contracts, modules, builds, and type tests |
-| `writing`                      | Clear, evidence-backed English technical prose        |
-| `git-and-github`               | Clean commits, feature branches, pushes, and PRs      |
+| Skill                  | Use for                                               |
+| ---------------------- | ----------------------------------------------------- |
+| `shape`                | Non-trivial scope, design, and plans                  |
+| `build`                | Focused production implementation                     |
+| `debug`                | Bugs, regressions, and failing tests                  |
+| `review`               | Diffs, pull requests, and test value                  |
+| `parallel`             | Independent, non-overlapping agent work               |
+| `frontend-design`      | Production interface design, refinement, and audits   |
+| `visual-brainstorming` | 2–3 locally reviewed Tailwind HTML directions         |
+| `php`                  | PHP apps, plain Composer packages, Laravel/Symfony    |
+| `react`                | React components, state, effects, and tests           |
+| `typescript`           | TypeScript contracts, modules, builds, and type tests |
+| `writing`              | Clear, evidence-backed English technical prose        |
+| `git-and-github`       | Clean commits, feature branches, pushes, and PRs      |
 
 The Claude SessionStart hook is only a compact router; detailed instructions load only when a skill
 matches. It does not impose process on simple questions.

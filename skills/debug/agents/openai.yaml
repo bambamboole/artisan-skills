@@ -1,0 +1,4 @@
+interface:
+  display_name: "Debug Root Causes"
+  short_description: "Find and verify the root cause of a failure"
+  default_prompt: "Use $debug to investigate this failure and establish its root cause."

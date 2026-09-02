@@ -1,5 +1,5 @@
 ---
-name: artisan-react
+name: react
 description:
   Use when building, reviewing, or debugging React components, hooks, state, effects, data fetching,
   rendering performance, or React tests in an existing frontend application.

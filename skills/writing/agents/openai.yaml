@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Clear Technical Prose"
+  short_description: "Edit technical prose for clarity and evidence"
+  default_prompt: "Use $writing to make this technical prose clearer and evidence-backed."

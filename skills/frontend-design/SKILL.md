@@ -1,5 +1,5 @@
 ---
-name: artisan-frontend-design
+name: frontend-design
 description:
   Use when designing, building, refining, or auditing a production web interface, page, or component
   in HTML, CSS, JavaScript, React, or another frontend stack after its visual direction is

@@ -1,5 +1,5 @@
 ---
-name: artisan-php
+name: php
 description:
   Use when building, reviewing, or debugging a PHP application, API, CLI command, Composer package,
   Laravel/Symfony feature, queue job, external service integration, test, or database interaction.

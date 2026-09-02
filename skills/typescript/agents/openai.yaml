@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write TypeScript Contracts"
+  short_description: "Build precise TypeScript contracts and modules"
+  default_prompt: "Use $typescript to implement and verify this TypeScript contract."

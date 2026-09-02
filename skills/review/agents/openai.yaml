@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Changes"
+  short_description: "Review a change for concrete, actionable risks"
+  default_prompt: "Use $review to review this change for verified, actionable risks."

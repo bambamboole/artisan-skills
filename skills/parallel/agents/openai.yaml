@@ -1,0 +1,4 @@
+interface:
+  display_name: "Coordinate Parallel Work"
+  short_description: "Coordinate independent implementation tasks"
+  default_prompt: "Use $parallel to split this approved plan into independent tasks."
